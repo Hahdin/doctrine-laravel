@@ -1,4 +1,4 @@
-# Passport & Doctrine ORM w/ Laravel 
+# Doctrine ORM w/ Laravel 
 
 
 
