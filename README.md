@@ -14,6 +14,7 @@ install the laravel-doctrine/extensions package and the gedmo one. We don't need
 ```bash
 composer require "laravel-doctrine/orm:1.4.*"
 composer require "laravel-doctrine/migrations"
+composer require "laravel-doctrine/extensions:1.0.*"
 composer require "gedmo/doctrine-extensions=^2.4"
 ```
 After updating composer, add the ServiceProvider() entries to the providers array in `config/app.php`
