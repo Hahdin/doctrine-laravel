@@ -122,6 +122,7 @@ Fix the namespace and paths in `doctrine.php` to point at where you put your Ent
         
 > If you don't have this file, you need to publish the config.
 ```php
+# doctrine.php
     'namespaces' => [
             'App\Entities'
     ],
@@ -145,10 +146,11 @@ Uncomment the Timestampable extension as well as any others you might want to us
     //LaravelDoctrine\Extensions\Translatable\TranslatableExtension::class
     ],
 ```
-Now go to your auth.php file
+Now go to your `auth.php` file
 
 change the providers section to use your entity and the doctrine driver.
 ```php
+# auth.php
     'providers' => [
         'users' => [
             'driver' => 'doctrine',
@@ -156,7 +158,7 @@ change the providers section to use your entity and the doctrine driver.
         ],
     ],
 ```
-OK, so at this point in time your composer.json file should have these entries:
+OK, so at this point in time your `composer.json` file should have these entries:
 ```json
 
     "require": {
@@ -172,7 +174,7 @@ OK, so at this point in time your composer.json file should have these entries:
 
 ```
 
-Finally, go ahead and replace the PasswordResetServiceProvider provided by Laravel, with the one provided by laravel-doctrine in the app.php file as well.
+Finally, go ahead and replace the PasswordResetServiceProvider provided by Laravel, with the one provided by laravel-doctrine in the `app.php` file as well.
 ```php
 //        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         LaravelDoctrine\ORM\Auth\Passwords\PasswordResetServiceProvider::class,
@@ -195,11 +197,13 @@ php artisan doctrine:migrations:migrate
 ```
 > Note: you'll notice we don't create a migration or entity for the password_resets table. We don't actually need one, Doctrine will magically create one when it tries to use it for the first time.
 
-Now you just have to make a few more modificaitons to the generated controllers to gether everything to work. Go to the RegisterController and modify the validator function. You must use the unique rule slightly different with laravel doctrine.. you can find documentation for it here: http://www.laraveldoctrine.org/docs/1.3/orm/validation
+Now you just have to make a few more modificaitons to the generated controllers to gether everything to work. Go to the `RegisterController.php` and modify the validator function. You must use the unique rule slightly different with laravel doctrine.. you can find documentation for it here: http://www.laraveldoctrine.org/docs/1.3/orm/validation
 
 It should look like this (change the reference to the users table to your User entity)
 
 ```php
+# RegisterController.php
+
 use App\Entities\User;
 use EntityManager;
 use Illuminate\Support\Facades\Validator;
@@ -235,6 +239,8 @@ Change the create() function so it uses the new entity to create the user (you'l
 Then in the ResetPasswordController override the resetPassword function by adding this function to the controller:
 
 ```php
+# ResetPasswordController.php
+
 use EntityManager;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Support\Str;
@@ -253,9 +259,10 @@ use Illuminate\Support\Str;
 
 ```
 
-Lastly... fix the app.blade.php file so it uses the getter for your name.
+Lastly... fix the `app.blade.php` file so it uses the getter for your name.
 
 ```html
+<!-- app.blade.php -->
    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
         {{ Auth::user()->getName() }} <span class="caret"></span>
    </a>
