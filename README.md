@@ -1,5 +1,5 @@
 # Doctrine ORM w/ Laravel 
-
+> extracted from this [blog](https://isaacearl.com/blog/laravel-doctrine-setup)
 
 
 Follow the steps here: http://www.laraveldoctrine.org/docs/1.3/orm/installation
