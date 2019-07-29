@@ -1,16 +1,15 @@
 # Doctrine ORM w/ Laravel 
 > extracted from this [blog](https://isaacearl.com/blog/laravel-doctrine-setup)
 
+Relevant links:
+- http://www.laraveldoctrine.org/docs/1.3/orm/installation
+- http://www.laraveldoctrine.org/docs/1.3/migrations/installation
+- http://www.laraveldoctrine.org/docs/1.3/extensions/installation
 
-Follow the steps here: http://www.laraveldoctrine.org/docs/1.3/orm/installation
+**Install the laravel-doctrine/extensions package and the gedmo one. We don't need the Beberlei extension.**
 
-And here: http://www.laraveldoctrine.org/docs/1.3/migrations/installation
+> Note: as you see below we are using v1.4 as the laravel used for this project is v5.8
 
-And lastly we'll need some of the extensions to make life easier: http://www.laraveldoctrine.org/docs/1.3/extensions/installation
-
-install the laravel-doctrine/extensions package and the gedmo one. We don't need the Beberlei extension.
-
-> Note: as you see below we are using v1.4 as laravel is v5.8
 ```bash
 composer require "laravel-doctrine/orm:1.4.*"
 composer require "laravel-doctrine/migrations"
@@ -22,11 +21,11 @@ After updating composer, add the ServiceProvider() entries to the providers arra
 ```php
 LaravelDoctrine\ORM\DoctrineServiceProvider::class,
 LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
-# if needed for annotation driver
+# needed for annotation driver
 LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider::class,
 
 ```
-To publish the config use:
+Publish the config:
 
 ```php
 php artisan vendor:publish --tag="config"
@@ -159,22 +158,6 @@ change the providers section to use your entity and the doctrine driver.
         ],
     ],
 ```
-OK, so at this point in time your `composer.json` file should have these entries:
-```json
-
-    "require": {
-        "php": "^7.1.3",
-        "fideloper/proxy": "^4.0",
-        "gedmo/doctrine-extensions": "2.4",
-        "laravel-doctrine/extensions": "1.0.*",
-        "laravel-doctrine/migrations": "^1.2",
-        "laravel-doctrine/orm": "1.4.*",
-        "laravel/framework": "5.8.*",
-        "laravel/tinker": "^1.0"
-    },
-
-```
-
 Finally, go ahead and replace the PasswordResetServiceProvider provided by Laravel, with the one provided by laravel-doctrine in the `app.php` file as well.
 ```php
 //        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
@@ -198,7 +181,7 @@ php artisan doctrine:migrations:migrate
 ```
 > Note: you'll notice we don't create a migration or entity for the password_resets table. We don't actually need one, Doctrine will magically create one when it tries to use it for the first time.
 
-Now you just have to make a few more modificaitons to the generated controllers to gether everything to work. Go to the `RegisterController.php` and modify the validator function. You must use the unique rule slightly different with laravel doctrine.. you can find documentation for it here: http://www.laraveldoctrine.org/docs/1.3/orm/validation
+Now you just have to make a few more modifications to the generated controllers to get everything to work. Go to the `RegisterController.php` and modify the validator function. You must use the unique rule slightly different with laravel doctrine. [here](http://www.laraveldoctrine.org/docs/1.3/orm/validation)
 
 It should look like this (change the reference to the users table to your User entity)
 
@@ -219,7 +202,7 @@ use Illuminate\Support\Facades\Validator;
         ]);
     }
 ```
-Change the create() function so it uses the new entity to create the user (you'll have to create some getters/setters for your properties on the entity)
+Change the create() function so it uses the new entity to create the user.
 
 ```php
     protected function create(array $data)
@@ -236,8 +219,7 @@ Change the create() function so it uses the new entity to create the user (you'l
         return $user;
     }
 ```
-
-Then in the ResetPasswordController override the resetPassword function by adding this function to the controller:
+Then in the `ResetPasswordController.php` override the resetPassword function by adding this function to the controller:
 
 ```php
 # ResetPasswordController.php
