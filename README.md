@@ -250,3 +250,12 @@ Lastly... fix the `app.blade.php` file so it uses the getter for your name.
         {{ Auth::user()->getName() }} <span class="caret"></span>
    </a>
 ```
+
+
+Encryption keys generated successfully.
+Personal access client created successfully.
+Client ID: 1
+Client secret: RbzXdFt8a8HXJo4l9zgdgoFWjQSICvkS5LPgopQw
+Password grant client created successfully.
+Client ID: 2
+Client secret: H2ZwXO3k8lvfX25pCpNzKxjUbpJufhj1wzZILWcT

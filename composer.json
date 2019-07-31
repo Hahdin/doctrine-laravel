@@ -15,6 +15,7 @@
         "laravel-doctrine/migrations": "^1.2",
         "laravel-doctrine/orm": "1.4.*",
         "laravel/framework": "5.8.*",
+        "laravel/passport": "^7.3",
         "laravel/tinker": "^1.0"
     },
     "require-dev": {
