@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
 use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 /**
  * @ORM\Entity
@@ -17,7 +18,7 @@ use LaravelDoctrine\ORM\Notifications\Notifiable;
 class User implements AuthenticatableContract, CanResetPasswordContract
 {
 
-    use Authenticatable, CanResetPassword, Timestamps, Notifiable;
+    use Authenticatable, CanResetPassword, Timestamps, Notifiable, HasApiTokens;
 
     /**
      * @ORM\Id
@@ -79,4 +80,5 @@ class User implements AuthenticatableContract, CanResetPasswordContract
     {
         return $this->getId();
     }
+
 }
